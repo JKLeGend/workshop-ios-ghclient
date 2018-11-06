@@ -14,12 +14,20 @@ class NewsViewController: UIViewController {
   private let events: [Event] = FakeDataProvider().providerData()
   
   private let reuseIdentifier = "NewsTableViewCell"
+  private let networkclient = AlamofireNetworkClient()
+  private let url = "https://api.github.com/users/JKLeGend/received_events"
 
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.delegate = self
     tableView.dataSource = self
     tableView.register(UINib(nibName: "NewsTableViewCell", bundle: nil), forCellReuseIdentifier: reuseIdentifier)
+    let header =  RequestHeaderBuilder()
+        .configure(username: "JKLeGend")
+        .configure(password: "")
+        .build()
+    networkclient.get(url: URL(string: url)!, header: header) { (json, error) in
+    }
   }
 }
 
